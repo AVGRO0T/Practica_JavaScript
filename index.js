@@ -7,41 +7,42 @@ function goalsRandom(min, max) {
     return Math.floor((Math.random() * (max - min + 1)) + min);
 }
 //Creando grupos Playoff
-function groupA(One, Two, Three, Four, Five, Six, Seven, Eight){
-    teams = [One, Two, Three, Four, Five, Six, Seven, Eight]
-    let groupA = [];
+function groupA(teams){
+    this.teams = teams;
+    let groupA = []
     for (var i = 0 ; i < 2 ; i++){   
-            groupA.push(teams[random[i]])      
+        groupA.push(teams[random[i]].name);
+        teams[random[i]].position = "A"
     }
     return groupA; 
     
 }
-function groupB(One, Two, Three, Four, Five, Six, Seven, Eight){
-    teams = [One, Two, Three, Four, Five, Six, Seven, Eight]
-    let groupB = [];
+function groupB(teams){
+    this.teams = teams;
+    let groupB = []
     for (var i = 2 ; i < 4 ; i++){   
-            groupB.push(teams[random[i]])       
-        
+        groupB.push(teams[random[i]].name);
+        teams[random[i]].position = "B"
     }
     return groupB; 
     
 }
-function groupC(One, Two, Three, Four, Five, Six, Seven, Eight){
-    teams = [One, Two, Three, Four, Five, Six, Seven, Eight]
-    let groupC = [];
-    for (var i = 4 ; i <= 5 ; i++){   
-            groupC.push(teams[random[i]])       
-        
+function groupC(teams){
+    this.teams = teams;
+    let groupC= []
+    for (var i = 4 ; i < 6 ; i++){   
+        groupC.push(teams[random[i]].name);
+        teams[random[i]].position = "C"
     }
     return groupC; 
     
 }
-function groupD(One, Two, Three, Four, Five, Six, Seven, Eight){
-    teams = [One, Two, Three, Four, Five, Six, Seven, Eight]
-    let groupD = [];
-    for (var i = 6 ; i <= 7 ; i++){   
-            groupD.push(teams[random[i]])       
-            
+function groupD(teams){
+    this.teams = teams;
+    let groupD = []
+    for (var i = 6  ; i < 8 ; i++){   
+        groupD.push(teams[random[i]].name);
+        teams[random[i]].position = "D"
     }
     return groupD; 
     
@@ -50,44 +51,57 @@ function groupD(One, Two, Three, Four, Five, Six, Seven, Eight){
 
 //Creating 8 teams
 class Teams {
-    constructor(name, goals, position){
+    constructor(name, goals, position, group, state){
         this.name = name;
         this.players = 11;
         this.goals = goals;
         this.position = position;
+        this.group = group;
+        this.state = state;
     }
     consutar(){
         return console.log = (this.name);
     }
 }
+
 //Creando los jugadores
-const Italy = new Teams("Italy") ;
-const Russia = new Teams("Russia") ;
-const Spain = new Teams("Spain") ;
-const Austria = new Teams("Austria") ;
-const England = new Teams("England") ;
-const Finland = new Teams("Finland") ;
-const Ukraine = new Teams("Ukraine") ;
-const Iceland = new Teams("Iceland") ;
-// Poniendo todos los jugadores en un array para repartir en equipos
-let NameTeams = [Italy.name, Russia.name, Spain.name, Austria.name, England.name, Finland.name, Ukraine.name, Iceland.name]
+const TeamsArr = [new Teams("Italy"),new Teams("Russia"),new Teams("Spain"),new Teams("Austria"),new Teams("England"),new Teams("Finland"), new Teams("Ukraine"), new Teams("Iceland")];
+
 // Funcion que juega en cuartos de Finales
-/* function playoff {
-    Italy.goals = goalsRandom(1,5);
-    Russia.goals = goalsRandom(1,5);
-    Spain.goals = goalsRandom(1,5);
-    Austria.goals = goalsRandom(1,5);
-    England.goals = goalsRandom(1,5);
-    Finland.goals = goalsRandom(1,5);
-    Ukraine.goals = goalsRandom(1,5);
-    Iceland.goals = goalsRandom(1,5);
+ function Playoff(TeamsArr, A, B){
+
+    TeamsArr.forEach(teams => {
+        teams.goals = goalsRandom(0,5);
+            
+          
+        })
+
+        for (let i = 0 ; i < 8 ; i++){
+                if (A[0] === TeamsArr[i].name){
+                  for (let j = 0 ; j <8 ; j++ ){
+                    if (B[1] === TeamsArr[j].name){
+                        if (TeamsArr[i].goals < TeamsArr[j].goals){
+                            TeamsArr[i].state = "Eliminado";
+                            TeamsArr[j].state = "Para cuartos";
+                            console.log (`${TeamsArr[j].name} gana`)
+                        } else if  (TeamsArr[i].goals > TeamsArr[j].goals){
+                            TeamsArr[j].state = "Eliminado";
+                            TeamsArr[i].state = "Para cuartos";
+                            console.log (`${TeamsArr[i].name} gana`)
+                        }
+                    }
+                  }  
+                }
+        }
+
+return 0;
 }
- */
+
 /* console.log de la fase de grupos*/
-var groupA = groupA(Italy.name,Russia.name, Spain.name, Austria.name, England.name, Finland.name, Ukraine.name, Iceland.name);
-var groupB = groupB(Italy.name,Russia.name, Spain.name, Austria.name, England.name, Finland.name, Ukraine.name, Iceland.name);
-var groupC = groupC(Italy.name,Russia.name, Spain.name, Austria.name, England.name, Finland.name, Ukraine.name, Iceland.name);
-var groupD = groupD(Italy.name,Russia.name, Spain.name, Austria.name, England.name, Finland.name, Ukraine.name, Iceland.name);
+var groupA = groupA(TeamsArr);
+var groupB = groupB(TeamsArr);
+var groupC = groupC(TeamsArr);
+var groupD = groupD(TeamsArr);
 console.log("==================================================\n== EMPIEZAN LAS FASES ELIMIANTORIAS DEL TORENEO ==\n==================================================\n")
 console.log("Equipos que paticipan en la Playoff:\n")
 console.log(`GRUPO A: ${groupA[0]}, ${groupA[1]}`);
@@ -95,6 +109,7 @@ console.log(`GRUPO B: ${groupB[0]}, ${groupB[1]}`);
 console.log(`GRUPO C: ${groupC[0]}, ${groupC[1]}`);
 console.log(`GRUPO D: ${groupD[0]}, ${groupD[1]}\n`);
 
-let test = ["Italy"];
-console.log(`${test}`.name)
+console.log("==================CUARTOS DE FINAL============\n")
+console.log(Playoff(TeamsArr, groupA, groupB, groupC, groupD))
+console.log(TeamsArr)
 
